@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ShakeRouteImport } from './routes/shake'
 import { Route as TrackRouteImport } from './routes/track'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShakeRoute = ShakeRouteImport.update({
+  id: '/shake',
+  path: '/shake',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TrackRoute = TrackRouteImport.update({
@@ -25,27 +31,31 @@ const TrackRoute = TrackRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/shake': typeof ShakeRoute
   '/track': typeof TrackRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/shake': typeof ShakeRoute
   '/track': typeof TrackRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/shake': typeof ShakeRoute
   '/track': typeof TrackRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/track'
+  fullPaths: '/' | '/shake' | '/track'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/track'
-  id: '__root__' | '/' | '/track'
+  to: '/' | '/shake' | '/track'
+  id: '__root__' | '/' | '/shake' | '/track'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ShakeRoute: typeof ShakeRoute
   TrackRoute: typeof TrackRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shake': {
+      id: '/shake'
+      path: '/shake'
+      fullPath: '/shake'
+      preLoaderRoute: typeof ShakeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/track': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ShakeRoute: ShakeRoute,
   TrackRoute: TrackRoute,
 }
 export const routeTree = rootRouteImport

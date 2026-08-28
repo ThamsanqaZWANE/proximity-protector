@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShakeRouteImport } from './routes/shake'
+import { Route as TeamRouteImport } from './routes/team'
 import { Route as TrackRouteImport } from './routes/track'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const ShakeRoute = ShakeRouteImport.update({
   path: '/shake',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TeamRoute = TeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TrackRoute = TrackRouteImport.update({
   id: '/track',
   path: '/track',
@@ -32,30 +38,34 @@ const TrackRoute = TrackRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/shake': typeof ShakeRoute
+  '/team': typeof TeamRoute
   '/track': typeof TrackRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/shake': typeof ShakeRoute
+  '/team': typeof TeamRoute
   '/track': typeof TrackRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/shake': typeof ShakeRoute
+  '/team': typeof TeamRoute
   '/track': typeof TrackRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/shake' | '/track'
+  fullPaths: '/' | '/shake' | '/team' | '/track'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/shake' | '/track'
-  id: '__root__' | '/' | '/shake' | '/track'
+  to: '/' | '/shake' | '/team' | '/track'
+  id: '__root__' | '/' | '/shake' | '/team' | '/track'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ShakeRoute: typeof ShakeRoute
+  TeamRoute: typeof TeamRoute
   TrackRoute: typeof TrackRoute
 }
 
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShakeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/team': {
+      id: '/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof TeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/track': {
       id: '/track'
       path: '/track'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ShakeRoute: ShakeRoute,
+  TeamRoute: TeamRoute,
   TrackRoute: TrackRoute,
 }
 export const routeTree = rootRouteImport

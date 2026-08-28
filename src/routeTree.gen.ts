@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ShakeRouteImport } from './routes/shake'
+import { Route as TeamRouteImport } from './routes/team'
+import { Route as TrackRouteImport } from './routes/track'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShakeRoute = ShakeRouteImport.update({
+  id: '/shake',
+  path: '/shake',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeamRoute = TeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrackRoute = TrackRouteImport.update({
+  id: '/track',
+  path: '/track',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/shake': typeof ShakeRoute
+  '/team': typeof TeamRoute
+  '/track': typeof TrackRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/shake': typeof ShakeRoute
+  '/team': typeof TeamRoute
+  '/track': typeof TrackRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/shake': typeof ShakeRoute
+  '/team': typeof TeamRoute
+  '/track': typeof TrackRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/shake' | '/team' | '/track'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/shake' | '/team' | '/track'
+  id: '__root__' | '/' | '/shake' | '/team' | '/track'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ShakeRoute: typeof ShakeRoute
+  TeamRoute: typeof TeamRoute
+  TrackRoute: typeof TrackRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/shake': {
+      id: '/shake'
+      path: '/shake'
+      fullPath: '/shake'
+      preLoaderRoute: typeof ShakeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/team': {
+      id: '/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof TeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/track': {
+      id: '/track'
+      path: '/track'
+      fullPath: '/track'
+      preLoaderRoute: typeof TrackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ShakeRoute: ShakeRoute,
+  TeamRoute: TeamRoute,
+  TrackRoute: TrackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

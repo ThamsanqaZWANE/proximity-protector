@@ -1,15 +1,17 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
+import { Disc, LocateFixed, Triangle, Users, Waves } from "lucide-react";
 import { useSafety } from "@/lib/safety";
 import { AlertOverlay } from "@/components/AlertOverlay";
 
 const TABS = [
-  { to: "/", label: "SOS" },
-  { to: "/track", label: "Track" },
-  { to: "/shake", label: "Shake" },
-  { to: "/record", label: "Record" },
-  { to: "/team", label: "Team" },
+  { to: "/", label: "sos", Icon: Triangle },
+  { to: "/track", label: "track", Icon: LocateFixed },
+  { to: "/shake", label: "shake", Icon: Waves },
+  { to: "/record", label: "record", Icon: Disc },
+  { to: "/team", label: "team", Icon: Users },
 ] as const;
+
 
 function SessionClock() {
   const [now, setNow] = useState<string | null>(null);

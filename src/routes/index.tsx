@@ -164,24 +164,22 @@ function SosScreen() {
 
 
       <div className="mt-6 px-6">
-        <div className="rounded-[13px] bg-panel2 p-4 ring-1 ring-line">
+        <div className="rounded-[16px] bg-panel p-5 ring-1 ring-line">
           <div className="flex items-center justify-between">
-            <span className="inline-flex items-center gap-2">
-              <span className={`size-2 rounded-full ${tracking ? "bg-amber tick-blink" : "bg-steel/50"}`} />
-              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-steel">
-                Crash detection
-              </span>
+            <span className="inline-flex items-center gap-2.5">
+              <span
+                className={`size-2 rounded-full ${tracking ? "bg-amber tick-blink" : "bg-steel/50"}`}
+              />
+              <span className="text-[17px] font-bold lowercase text-slate-50">crash detection</span>
             </span>
-            <span className="font-mono text-[11px] text-steel/60">
-              {tracking ? "Monitoring" : "Standby"}
+            <span className="text-[13px] lowercase text-steel/60">
+              {tracking ? "monitoring" : "standby"}
             </span>
           </div>
-          <div className="mt-3 flex items-end justify-between gap-4">
+          <div className="mt-4 flex items-end justify-between gap-4">
             <div className="min-w-0">
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-steel/60">
-                Speed history
-              </p>
-              <p className="font-mono text-lg text-slate-100">
+              <p className="text-[12px] lowercase text-steel/60">speed history</p>
+              <p className="mt-1 text-[17px] font-bold lowercase text-slate-100">
                 {recent.length > 1
                   ? `${String(recent[0]!.kmh).padStart(3, "0")} → ${String(
                       recent[recent.length - 1]!.kmh,
@@ -190,60 +188,55 @@ function SosScreen() {
               </p>
             </div>
             <div className="flex h-9 items-end gap-1" aria-hidden="true">
-              {(recent.length ? recent : [0, 0, 0, 0, 0, 0].map(() => ({ kmh: 0 }))).map(
-                (s, i) => (
-                  <span
-                    key={i}
-                    className={`w-2 rounded-sm ${
-                      s.kmh >= 45 ? "bg-amber" : s.kmh <= 6 ? "bg-alarm/70" : "bg-steel/55"
-                    }`}
-                    style={{ height: `${Math.max(6, Math.min(100, s.kmh))}%` }}
-                  />
-                ),
-              )}
+              {(recent.length ? recent : [0, 0, 0, 0, 0, 0].map(() => ({ kmh: 0 }))).map((s, i) => (
+                <span
+                  key={i}
+                  className={`w-2 rounded-sm ${
+                    s.kmh >= 45 ? "bg-amber" : s.kmh <= 6 ? "bg-alarm/70" : "bg-steel/55"
+                  }`}
+                  style={{ height: `${Math.max(6, Math.min(100, s.kmh))}%` }}
+                />
+              ))}
             </div>
           </div>
-          {geoError ? (
-            <p className="mt-3 font-mono text-[11px] text-alarm">{geoError}</p>
-          ) : null}
+          {geoError ? <p className="mt-3 text-[13px] text-alarm">{geoError}</p> : null}
           <button
             onClick={startTracking}
             disabled={tracking}
-            className="mt-4 w-full rounded-[11px] bg-alarm py-3.5 text-sm font-semibold tracking-wide text-alarm-foreground ring-1 ring-alarm/40 disabled:bg-panel disabled:text-steel disabled:ring-line"
+            className="mt-5 w-full rounded-full bg-alarm py-4 text-[15px] font-semibold lowercase text-alarm-foreground disabled:bg-panel2 disabled:text-steel disabled:ring-1 disabled:ring-line"
           >
-            {tracking ? "Tracking active" : "Start location tracking"}
+            {tracking ? "tracking active" : "start location tracking"}
           </button>
         </div>
       </div>
 
       <div className="mt-5 px-6">
-        <div className="mb-2.5 flex items-center justify-between">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-steel/70">
-            Emergency contacts
-          </p>
-          <Link to="/team" className="font-mono text-[11px] text-steel/60">
+        <div className="mb-3 flex items-center justify-between">
+          <p className="text-[17px] font-bold lowercase text-slate-50">emergency contacts</p>
+          <Link to="/team" className="text-[13px] lowercase text-steel/60">
             {contacts.length} ready
           </Link>
         </div>
-        <div className="divide-y divide-line overflow-hidden rounded-[13px] bg-panel ring-1 ring-line">
+        <div className="divide-y divide-line overflow-hidden rounded-[16px] bg-panel ring-1 ring-line">
           {contacts.slice(0, 3).map((c) => (
-            <div key={c.id} className="flex items-center gap-3 p-3">
-              <span className="grid size-9 shrink-0 place-items-center rounded-full bg-panel2 font-mono text-[11px] text-steel ring-1 ring-line">
+            <div key={c.id} className="flex items-center gap-3 p-4">
+              <span className="grid size-10 shrink-0 place-items-center rounded-full bg-panel2 text-[12px] font-semibold text-steel ring-1 ring-line">
                 {initials(c.name)}
               </span>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-[13px] font-medium text-slate-100">{c.name}</p>
-                <p className="truncate font-mono text-[11px] text-steel/60">
+                <p className="truncate text-[15px] font-semibold text-slate-100">{c.name}</p>
+                <p className="truncate text-[12px] lowercase text-steel/60">
                   {c.role} · {c.phone}
                 </p>
               </div>
-              <span className="shrink-0 rounded-full px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-slate-300 ring-1 ring-line">
-                Ready
+              <span className="shrink-0 rounded-full px-2.5 py-1 text-[12px] lowercase text-slate-300 ring-1 ring-line">
+                ready
               </span>
             </div>
           ))}
         </div>
       </div>
+
     </AppShell>
   );
 }

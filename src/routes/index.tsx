@@ -4,6 +4,28 @@ import { AppShell } from "@/components/AppShell";
 import { initials, useSafety } from "@/lib/safety";
 import { useFakeCall } from "@/components/FakeCallOverlay";
 
+function useBatteryLevel() {
+  const [level, setLevel] = useState<number | null>(null);
+  useEffect(() => {
+    const nav = navigator as Navigator & {
+      getBattery?: () => Promise<{ level: number; addEventListener: (e: string, cb: () => void) => void }>;
+    };
+    if (!nav.getBattery) return;
+    let cancelled = false;
+    nav.getBattery().then((b) => {
+      if (cancelled) return;
+      const read = () => setLevel(Math.round(b.level * 100));
+      read();
+      b.addEventListener("levelchange", read);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  return level;
+}
+
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [

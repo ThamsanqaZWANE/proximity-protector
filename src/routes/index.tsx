@@ -38,6 +38,7 @@ function SosScreen() {
     history,
     peakKmh,
   } = useSafety();
+  const fakeCall = useFakeCall();
   const [hold, setHold] = useState(0);
   const timerRef = useRef<number | null>(null);
 

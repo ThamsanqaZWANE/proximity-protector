@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { initials, useSafety } from "@/lib/safety";
+import { useFakeCall } from "@/components/FakeCallOverlay";
 
 export const Route = createFileRoute("/")({
   head: () => ({

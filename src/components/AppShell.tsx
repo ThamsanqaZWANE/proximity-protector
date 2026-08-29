@@ -1,15 +1,17 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
+import { Disc, LocateFixed, Triangle, Users, Waves } from "lucide-react";
 import { useSafety } from "@/lib/safety";
 import { AlertOverlay } from "@/components/AlertOverlay";
 
 const TABS = [
-  { to: "/", label: "SOS" },
-  { to: "/track", label: "Track" },
-  { to: "/shake", label: "Shake" },
-  { to: "/record", label: "Record" },
-  { to: "/team", label: "Team" },
+  { to: "/", label: "sos", Icon: Triangle },
+  { to: "/track", label: "track", Icon: LocateFixed },
+  { to: "/shake", label: "shake", Icon: Waves },
+  { to: "/record", label: "record", Icon: Disc },
+  { to: "/team", label: "team", Icon: Users },
 ] as const;
+
 
 function SessionClock() {
   const [now, setNow] = useState<string | null>(null);
@@ -19,60 +21,48 @@ function SessionClock() {
     const id = window.setInterval(tick, 1000);
     return () => window.clearInterval(id);
   }, []);
-  return <p className="font-mono text-[13px] text-slate-200">{now ?? "--:--:--"}</p>;
+  return <p className="text-[17px] font-bold tabular-nums text-slate-50">{now ?? "--:--:--"}</p>;
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const { tracking } = useSafety();
+
 
   return (
     <div className="min-h-screen bg-ink text-foreground selection:bg-alarm/30">
       <div className="mx-auto flex min-h-screen w-full max-w-[430px] flex-col bg-ink">
-        <header className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-6 pt-6 pb-4">
-          <div className="flex min-w-0 items-center gap-2.5">
-            <div className="grid size-9 shrink-0 place-items-center rounded-[9px] bg-panel ring-1 ring-line">
-              <div className={`size-2.5 rounded-full bg-alarm ${tracking ? "tick-blink" : ""}`} />
-            </div>
-            <div className="min-w-0">
-              <p className="truncate text-[13px] font-semibold tracking-tight">A.A Private Security</p>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-steel/70">
-                Security console
-              </p>
-            </div>
+        <header className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4 px-6 pt-7 pb-5">
+          <div className="min-w-0">
+            <p className="truncate text-[26px] font-bold lowercase tracking-tight text-slate-50">
+              a.a security
+            </p>
+            <p className="text-[13px] lowercase text-steel/70">security console</p>
           </div>
           <div className="text-right">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-steel/60">Session</p>
+            <p className="text-[12px] lowercase text-steel/60">session</p>
             <SessionClock />
           </div>
         </header>
 
         <main className="flex-1 pb-4">{children}</main>
 
-        <nav className="sticky bottom-0 bg-ink px-4 pt-3 pb-6">
-          <div className="grid grid-cols-5 gap-1 rounded-[15px] bg-panel p-1 ring-1 ring-line">
-            {TABS.map((tab) => (
+        <nav className="sticky bottom-0 bg-ink px-6 pt-4 pb-7">
+          <div className="grid grid-cols-5 gap-1 border-t border-line pt-4">
+            {TABS.map(({ to, label, Icon }) => (
               <Link
-                key={tab.to}
-                to={tab.to}
-                activeOptions={{ exact: tab.to === "/" }}
-                className="flex flex-col items-center gap-1 rounded-[10px] py-3 text-steel"
-                activeProps={{ className: "bg-panel2 text-alarm" }}
+                key={to}
+                to={to}
+                activeOptions={{ exact: to === "/" }}
+                className="flex flex-col items-center gap-2 rounded-[10px] py-1 text-steel"
+                activeProps={{ className: "text-alarm" }}
               >
-                {({ isActive }) => (
-                  <>
-                    <span className="font-mono text-[11px] uppercase tracking-[0.14em]">
-                      {tab.label}
-                    </span>
-                    <span
-                      className={`size-1.5 rounded-full ${isActive ? "bg-alarm" : "bg-steel/40"}`}
-                    />
-                  </>
-                )}
+                <Icon className="size-5" strokeWidth={2} aria-hidden="true" />
+                <span className="text-[12px] lowercase">{label}</span>
               </Link>
             ))}
           </div>
         </nav>
       </div>
+
       <AlertOverlay />
     </div>
   );

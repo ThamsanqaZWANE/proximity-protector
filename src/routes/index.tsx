@@ -49,19 +49,12 @@ export const Route = createFileRoute("/")({
 const HOLD_MS = 1200;
 
 function SosScreen() {
-  const {
-    speedKmh,
-    coords,
-    tracking,
-    startTracking,
-    geoError,
-    contacts,
-    raise,
-    history,
-    peakKmh,
-  } = useSafety();
+  const { speedKmh, coords, tracking, startTracking, geoError, contacts, raise, history } =
+    useSafety();
   const fakeCall = useFakeCall();
+  const battery = useBatteryLevel();
   const [hold, setHold] = useState(0);
+
   const timerRef = useRef<number | null>(null);
 
   useEffect(() => {

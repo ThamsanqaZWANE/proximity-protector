@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { initials, useSafety } from "@/lib/safety";
+import { useFakeCall } from "@/components/FakeCallOverlay";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -37,6 +38,7 @@ function SosScreen() {
     history,
     peakKmh,
   } = useSafety();
+  const fakeCall = useFakeCall();
   const [hold, setHold] = useState(0);
   const timerRef = useRef<number | null>(null);
 
@@ -131,6 +133,14 @@ function SosScreen() {
         <p className="mt-4 font-mono text-[12px] uppercase tracking-[0.16em] text-steel/70">
           Dispatch in 40 s
         </p>
+        <button
+          onClick={() => fakeCall.start(15)}
+          className="mt-3 font-mono text-[11px] uppercase tracking-[0.2em] text-steel/50 underline decoration-steel/30 underline-offset-4"
+        >
+          {fakeCall.pending !== null
+            ? `Decoy call in ${fakeCall.pending}s`
+            : "Need an exit? Ring me in 15 s"}
+        </button>
       </div>
 
       <div className="mt-6 px-6">

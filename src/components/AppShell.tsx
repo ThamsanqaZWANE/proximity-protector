@@ -21,7 +21,7 @@ function SessionClock() {
     const id = window.setInterval(tick, 1000);
     return () => window.clearInterval(id);
   }, []);
-  return <p className="font-mono text-[13px] text-slate-200">{now ?? "--:--:--"}</p>;
+  return <p className="text-[17px] font-bold tabular-nums text-slate-50">{now ?? "--:--:--"}</p>;
 }
 
 export function AppShell({ children }: { children: ReactNode }) {

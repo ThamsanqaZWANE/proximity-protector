@@ -133,6 +133,14 @@ function SosScreen() {
         <p className="mt-4 font-mono text-[12px] uppercase tracking-[0.16em] text-steel/70">
           Dispatch in 40 s
         </p>
+        <button
+          onClick={() => fakeCall.start(15)}
+          className="mt-3 font-mono text-[11px] uppercase tracking-[0.2em] text-steel/50 underline decoration-steel/30 underline-offset-4"
+        >
+          {fakeCall.pending !== null
+            ? `Decoy call in ${fakeCall.pending}s`
+            : "Need an exit? Ring me in 15 s"}
+        </button>
       </div>
 
       <div className="mt-6 px-6">

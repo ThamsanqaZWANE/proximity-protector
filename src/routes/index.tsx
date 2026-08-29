@@ -89,44 +89,53 @@ function SosScreen() {
   return (
     <AppShell>
       <div className="px-6">
-        <div className="grid grid-cols-3 gap-2.5">
-          <div className="rounded-[11px] bg-panel p-3 ring-1 ring-line">
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-steel/70">Speed</p>
-            <p className="mt-1 font-mono text-2xl leading-none tabular-nums">
+        <div className="grid grid-cols-3 gap-3">
+          <div className="rounded-[14px] bg-panel p-4 ring-1 ring-line">
+            <p className="text-[12px] lowercase text-steel/70">speed</p>
+            <p className="mt-1 text-[26px] font-bold leading-none tabular-nums text-slate-50">
               {String(speedKmh).padStart(3, "0")}
             </p>
-            <p className="font-mono text-[10px] text-steel/60">km/h</p>
+            <p className="mt-1 text-[12px] lowercase text-steel/60">km/h</p>
           </div>
-          <div className="rounded-[11px] bg-panel p-3 ring-1 ring-line">
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-steel/70">GPS</p>
-            <p className={`mt-1 font-mono text-2xl leading-none ${coords ? "text-amber" : "text-steel"}`}>
-              {coords ? "LOCK" : "OFF"}
+          <div className="rounded-[14px] bg-panel p-4 ring-1 ring-line">
+            <p className="text-[12px] lowercase text-steel/70">gps</p>
+            <p
+              className={`mt-1 text-[26px] font-bold leading-none lowercase ${coords ? "text-amber" : "text-alarm"}`}
+            >
+              {coords ? "lock" : "off"}
             </p>
-            <p className="font-mono text-[10px] text-steel/60">
+            <p className="mt-1 text-[12px] lowercase text-steel/60">
               {coords ? `±${coords.accuracy} m` : "no fix"}
             </p>
           </div>
-          <div className="rounded-[11px] bg-panel p-3 ring-1 ring-line">
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-steel/70">Peak</p>
-            <p className="mt-1 font-mono text-2xl leading-none tabular-nums">
-              {String(peakKmh).padStart(3, "0")}
+          <div className="rounded-[14px] bg-panel p-4 ring-1 ring-line">
+            <p className="text-[12px] lowercase text-steel/70">battery</p>
+            <p className="mt-1 text-[26px] font-bold leading-none tabular-nums text-slate-50">
+              {battery !== null ? `${battery}%` : "--"}
             </p>
-            <p className="font-mono text-[10px] text-steel/60">km/h</p>
+            <p className="mt-1 text-[12px] lowercase text-steel/60">phone</p>
           </div>
         </div>
+
+        <button
+          onClick={() => fakeCall.start(15)}
+          className="mt-3 w-full rounded-full bg-panel py-4 text-[15px] font-semibold lowercase text-slate-100 ring-1 ring-line"
+        >
+          {fakeCall.pending !== null
+            ? `decoy call in ${fakeCall.pending}s`
+            : "need an exit? ring me in 15s"}
+        </button>
       </div>
 
-      <div className="mt-5 flex flex-col items-center px-6">
+      <div className="mt-6 flex flex-col items-center px-6">
         <button
           onPointerDown={beginHold}
           onPointerUp={endHold}
           onPointerLeave={endHold}
           onPointerCancel={endHold}
           aria-label="Hold to request immediate help"
-          className="sos-pulse relative grid size-[210px] place-items-center rounded-full bg-alarm ring-1 ring-alarm/40 select-none touch-none"
+          className="sos-pulse relative grid size-[230px] place-items-center rounded-full bg-alarm select-none touch-none"
         >
-          <span className="absolute inset-3 rounded-full ring-1 ring-black/25" />
-          <span className="absolute inset-[34px] rounded-full ring-1 ring-black/20" />
           <span
             className="pointer-events-none absolute inset-0 rounded-full"
             style={{
@@ -134,29 +143,25 @@ function SosScreen() {
             }}
           />
           <span className="relative text-center">
-            <span className="block font-mono text-[11px] uppercase tracking-[0.3em] text-alarm-foreground/80">
-              Hold to call
+            <span className="block text-[15px] lowercase text-alarm-foreground/85">
+              hold to call
             </span>
-            <span className="mt-1 block text-5xl leading-none font-semibold tracking-tight text-alarm-foreground">
+            <span className="mt-2 block text-[64px] font-bold leading-none tracking-tight text-alarm-foreground">
               SOS
             </span>
-            <span className="mt-2 block font-mono text-[11px] uppercase tracking-[0.2em] text-alarm-foreground/70">
-              Armed
-            </span>
+            <span className="mt-2 block text-[15px] lowercase text-alarm-foreground/80">armed</span>
           </span>
         </button>
-        <p className="mt-4 font-mono text-[12px] uppercase tracking-[0.16em] text-steel/70">
-          Dispatch in 40 s
-        </p>
-        <button
-          onClick={() => fakeCall.start(15)}
-          className="mt-3 font-mono text-[11px] uppercase tracking-[0.2em] text-steel/50 underline decoration-steel/30 underline-offset-4"
+        <p className="mt-5 text-[15px] lowercase text-steel/70">dispatch in 40s</p>
+        <Link
+          to="/record"
+          className="mt-5 flex w-full items-center justify-center gap-3 rounded-full bg-panel py-4 text-[15px] font-semibold lowercase text-slate-100 ring-1 ring-line"
         >
-          {fakeCall.pending !== null
-            ? `Decoy call in ${fakeCall.pending}s`
-            : "Need an exit? Ring me in 15 s"}
-        </button>
+          <span className="size-3.5 rounded-full bg-alarm" aria-hidden="true" />
+          start recording
+        </Link>
       </div>
+
 
       <div className="mt-6 px-6">
         <div className="rounded-[13px] bg-panel2 p-4 ring-1 ring-line">

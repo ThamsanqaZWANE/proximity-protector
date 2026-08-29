@@ -25,7 +25,7 @@ function SessionClock() {
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const { tracking } = useSafety();
+
 
   return (
     <div className="min-h-screen bg-ink text-foreground selection:bg-alarm/30">

@@ -193,7 +193,8 @@ function FakeCallScreen({ onAnswer }: { onAnswer: () => void }) {
           {answered ? "End call" : "Decline"}
         </button>
         <button
-          onClick={answered ? end : onAnswer}
+          onClick={answered ? undefined : onAnswer}
+          aria-disabled={answered}
           className="rounded-[14px] bg-panel2 py-4 text-sm font-semibold text-slate-100 ring-1 ring-line"
         >
           {answered ? "Speaker" : "Answer"}

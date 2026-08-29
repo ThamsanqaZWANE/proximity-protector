@@ -7,6 +7,7 @@ const TABS = [
   { to: "/", label: "SOS" },
   { to: "/track", label: "Track" },
   { to: "/shake", label: "Shake" },
+  { to: "/record", label: "Record" },
   { to: "/team", label: "Team" },
 ] as const;
 
@@ -48,7 +49,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <main className="flex-1 pb-4">{children}</main>
 
         <nav className="sticky bottom-0 bg-ink px-4 pt-3 pb-6">
-          <div className="grid grid-cols-4 gap-1 rounded-[15px] bg-panel p-1 ring-1 ring-line">
+          <div className="grid grid-cols-5 gap-1 rounded-[15px] bg-panel p-1 ring-1 ring-line">
             {TABS.map((tab) => (
               <Link
                 key={tab.to}
